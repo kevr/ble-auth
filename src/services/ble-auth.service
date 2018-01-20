@@ -3,9 +3,9 @@ Description=ble-auth daemon service
 Requires=bluetooth.service
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=/usr/bin/ble-auth
+Type=forking
+ExecStart=/bin/bash -c '/usr/bin/ble-server &'
+ExecStop=/bin/bash -c '/usr/bin/killall -9 /usr/bin/ble-server'
 
 [Install]
 WantedBy=multi-user.target
