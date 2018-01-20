@@ -1,6 +1,4 @@
 #!/bin/bash
 
-if ! ps aux | grep -q 'ble-client'; then
-	ble-client &
-fi
+(ps aux | grep -q 'ble-client') && (ble-client 2>&1 >/tmp/ble-client.log &)
 

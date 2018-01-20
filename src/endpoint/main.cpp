@@ -58,6 +58,15 @@ int main(int argc, char *argv[])
 	while(1) {
 		io.reset();
 		sock.reset(new net::socket(io));
+
+		sock->on_read([](net::socket& sock, std::string str) {
+			if(str == "lock") {
+				system("gnome-screensaver-command -l");
+			} else if(str == "unlock") {
+				system("gnome-screensaver-command -d && xset s reset");
+			}
+		});
+
 		// Always keep trying to reconnect
 		sock->run(host, port);
 		io.run();

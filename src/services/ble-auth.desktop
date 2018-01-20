@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=BLE Auth
+GenericName=ble-auth
+Comment=ble-client auto launcher
+Exec=/etc/ble-auth/ble-client-launcher.sh
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
