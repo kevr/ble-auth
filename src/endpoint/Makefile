@@ -1,6 +1,6 @@
 
 OBJECTS=main.o socket.o
-CXXFLAGS=-std=c++14
+CXXFLAGS=-std=c++14 -g
 LDFLAGS=-lbluetooth -lboost_system -lpthread
 
 EXEC=ble-client

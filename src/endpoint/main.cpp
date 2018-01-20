@@ -1,16 +1,28 @@
 #include "socket.h"
+#include "scanner.h"
 #include <iostream>
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+	std::string host;
 	if(argc < 2) {
-		std::cerr << "usage: " << argv[0] << " host [port]" << std::endl;
-		return 1;
+		boost::asio::io_service io;
+		net::scanner scanner(io);
+		if(scanner.scan("192.168.1.0", 24, 6666, host)) {
+			std::cout << "found host: " << host << std::endl;
+		} else {
+			std::cout << "unable to locate host" << std::endl;
+			return 1;
+		}
 	}
 
-	std::string host(argv[1]);
+	if(argc > 1) {
+		std::string host(argv[1]);
+	}
+
 	unsigned short port = 6666;
+
 	if(argc > 2) {
 		try {
 			port = std::stoi(argv[2]);
