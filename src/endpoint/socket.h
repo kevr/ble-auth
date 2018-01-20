@@ -5,6 +5,7 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
 
 using boost::asio::ip::tcp;
 
@@ -28,11 +29,17 @@ namespace net
 
 		void run(std::string host, unsigned short port)
 		{
+			sock.close();
 			boost::asio::ip::tcp::resolver::query query(host, std::to_string(port));
 			resolver.async_resolve(query,
 				boost::bind(&socket::async_on_resolve, this,
 					boost::asio::placeholders::error,
 					boost::asio::placeholders::iterator));
+		}
+
+		bool connected() const
+		{
+			return m_connected;
 		}
 
 	private:
@@ -55,6 +62,7 @@ namespace net
 		{
 			if(!ec) {
 				std::cout << "connected" << std::endl;
+				m_connected = true;
 				boost::asio::async_read_until(sock, input_stream, "\r\n",
 					boost::bind(&socket::async_on_read, this,
 						boost::asio::placeholders::error));
@@ -105,6 +113,8 @@ namespace net
 
 		std::function<void(socket&, std::string)>
 			on_read_fn = default_on_read;
+
+		bool m_connected = false;
 	};
 };
 
