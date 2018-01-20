@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	}
 
 	if(argc > 1) {
-		std::string host(argv[1]);
+		host = std::string(argv[1]);
 	}
 
 	unsigned short port = 6666;
